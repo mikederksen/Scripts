@@ -1,0 +1,21 @@
+FROM ruby:2.5.0-alpine3.7
+
+RUN apk update
+RUN apk add build-base
+RUN gem install jekyll bundler
+
+RUN mkdir /usr/share/jekyll-builder
+
+COPY ./files/ usr/share/jekyll-builder/
+WORKDIR /usr/share/jekyll-builder
+
+RUN bundle install
+RUN mkdir /usr/share/jekyll-builder/output
+
+VOLUME /usr/share/jekyll-builder/source
+VOLUME /usr/share/jekyll-builder/output
+
+CMD bundle exec jekyll build \
+        --config _config.yml \
+        --source /usr/share/jekyll-builder/source \
+        --destination /usr/share/jekyll-builder/output
