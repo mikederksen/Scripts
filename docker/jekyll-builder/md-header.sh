@@ -3,5 +3,7 @@ find "$(pwd)" -type f -name "*.md" | while read fname; do
         echo $fname found
     else
         echo $fname not found
+	sed -i '1i---' $fname
+	sed -i '1i---' $fname
     fi
 done
