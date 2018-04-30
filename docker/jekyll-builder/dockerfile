@@ -7,6 +7,7 @@ RUN gem install jekyll bundler
 RUN mkdir /usr/share/jekyll-builder
 
 COPY ./config/ usr/share/jekyll-builder/
+COPY ./md-header.sh usr/share/jekyll-builder/
 WORKDIR /usr/share/jekyll-builder
 
 RUN bundle install
@@ -14,6 +15,8 @@ RUN mkdir /usr/share/jekyll-builder/output
 
 VOLUME /usr/share/jekyll-builder/source
 VOLUME /usr/share/jekyll-builder/output
+
+IETS usr/share/jekyll-builder/md-header.sh
 
 CMD bundle exec jekyll build \
         --config _config.yml \
