@@ -6,7 +6,7 @@ RUN gem install jekyll bundler
 
 RUN mkdir /usr/share/jekyll-builder
 
-COPY ./files/ usr/share/jekyll-builder/
+COPY ./config/ usr/share/jekyll-builder/
 WORKDIR /usr/share/jekyll-builder
 
 RUN bundle install
