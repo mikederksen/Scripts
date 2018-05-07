@@ -7,18 +7,19 @@ RUN gem install jekyll bundler
 RUN mkdir /usr/share/jekyll-builder
 
 COPY ./config/ usr/share/jekyll-builder/
-COPY ./md-header.sh usr/share/jekyll-builder/
-WORKDIR /usr/share/jekyll-builder
+COPY ./md-header.sh usr/share/jekyll-builder/md-header.sh
+COPY ./execute.sh usr/share/jekyll-builder/execute.sh
 
+RUN ["chmod", "+x", "/usr/share/jekyll-builder/md-header.sh"]
+RUN ["chmod", "+x", "/usr/share/jekyll-builder/execute.sh"]
+
+#WORKDIR is needed for the bundle install command
+WORKDIR /usr/share/jekyll-builder
 RUN bundle install
+
 RUN mkdir /usr/share/jekyll-builder/output
 
 VOLUME /usr/share/jekyll-builder/source
 VOLUME /usr/share/jekyll-builder/output
 
-IETS usr/share/jekyll-builder/md-header.sh
-
-CMD bundle exec jekyll build \
-        --config _config.yml \
-        --source /usr/share/jekyll-builder/source \
-        --destination /usr/share/jekyll-builder/output
+CMD /usr/share/jekyll-builder/execute.sh
