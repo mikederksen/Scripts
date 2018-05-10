@@ -1,24 +1,31 @@
 FROM ruby:2.5.0-alpine3.7
 
+# Installing jekyll
 RUN apk update
 RUN apk add build-base
 RUN gem install jekyll bundler
 
 RUN mkdir /usr/share/jekyll-builder
 
+# Config files needed for jekyll compilation
+# These include a default css template, a Gemfile, a config file and a 404 page
 COPY ./config/ usr/share/jekyll-builder/
-COPY ./md-header.sh usr/share/jekyll-builder/md-header.sh
+
+# Scripts needed for running the container
+COPY ./add-md-headers.sh usr/share/jekyll-builder/add-md-headers.sh
+COPY ./md-path-replace.sh usr/share/jekyll-builder/md-path-replace.sh
 COPY ./execute.sh usr/share/jekyll-builder/execute.sh
 
-RUN ["chmod", "+x", "/usr/share/jekyll-builder/md-header.sh"]
+# By default the container doesn't have executing rights on the scripts
+RUN ["chmod", "+x", "/usr/share/jekyll-builder/add-md-headers.sh"]
+RUN ["chmod", "+x", "/usr/share/jekyll-builder/md-path-replace.sh"]
 RUN ["chmod", "+x", "/usr/share/jekyll-builder/execute.sh"]
 
-#WORKDIR is needed for the bundle install command
+# WORKDIR is needed for the bundle install command
 WORKDIR /usr/share/jekyll-builder
 RUN bundle install
 
-RUN mkdir /usr/share/jekyll-builder/output
-
+# Declaring source and output volumes, used for compiling the md files
 VOLUME /usr/share/jekyll-builder/source
 VOLUME /usr/share/jekyll-builder/output
 
