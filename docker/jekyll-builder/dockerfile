@@ -12,9 +12,9 @@ RUN mkdir /usr/share/jekyll-builder
 COPY ./config/ usr/share/jekyll-builder/
 
 # Scripts needed for running the container
-COPY ./add-md-headers.sh usr/share/jekyll-builder/add-md-headers.sh
-COPY ./md-path-replace.sh usr/share/jekyll-builder/md-path-replace.sh
-COPY ./execute.sh usr/share/jekyll-builder/execute.sh
+COPY ./scripts/add-md-headers.sh usr/share/jekyll-builder/add-md-headers.sh
+COPY ./scripts/md-path-replace.sh usr/share/jekyll-builder/md-path-replace.sh
+COPY ./scripts/execute.sh usr/share/jekyll-builder/execute.sh
 
 # By default the container doesn't have executing rights on the scripts
 RUN ["chmod", "+x", "/usr/share/jekyll-builder/add-md-headers.sh"]
