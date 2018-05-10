@@ -13,7 +13,7 @@ COPY ./config/ usr/share/jekyll-builder/
 
 # Scripts needed for running the container
 COPY ./scripts/add-md-headers.sh usr/share/jekyll-builder/add-md-headers.sh
-COPY ./scripts/md-path-replace.sh usr/share/jekyll-builder/md-path-replace.sh
+COPY ./scripts/md-path-replace.sh usr/share/jekyll-builder/md-path-replace.sh   
 COPY ./scripts/execute.sh usr/share/jekyll-builder/execute.sh
 
 # By default the container doesn't have executing rights on the scripts
